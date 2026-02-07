@@ -1,0 +1,31 @@
+import pandas as pd
+import numpy as np
+from sqlalchemy import create_engine
+
+df = pd.read_csv('D:\\Data_set\\Data_Set_4\\Movies_data\\movies.csv')
+
+df = df.drop(columns=['crew','homepage','keywords','tagline','overview'])
+
+df['director'] = df['director'].fillna('Mssing')
+df['cast'] = df['cast'].fillna('Mssing')
+df['runtime'] = df['runtime'].fillna(df['runtime'].mean()).round().astype(int)
+df['release_date'] = pd.to_datetime(df['release_date'],errors="coerce").ffill()
+mask = df['genres'].isna()
+df.loc[mask, 'genres'] = np.random.choice(
+    df['genres'].dropna(),
+    size=mask.sum()
+)
+
+engine = create_engine(
+    "mysql+pymysql://root:Vivek%40123@localhost:3306/movies_data")
+
+df.to_sql(
+    name='movies_data',
+    con=engine,
+    if_exists='replace', 
+    index=False
+)
+
+print("Data inserted successfully!")
+
+df.to_csv("D:\\Data_set\Data_set_4\\Movies_data\\clean_data_set_from_payton.csv")
