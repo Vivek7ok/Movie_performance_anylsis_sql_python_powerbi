@@ -5,7 +5,7 @@
 This project analyzes a movie dataset to discover insights related to revenue performance, genres, ratings, production companies, and other key factors affecting movie success. The goal is to apply data analysis techniques to identify trends and support business decision-making in the film industry.
 
 ## 🎯 Objectives
-
+ 
 * Analyze movie performance using financial and audience metrics
 * Identify high-performing genres and directors
 * Understand relationship between budget, revenue, ratings, and popularity
