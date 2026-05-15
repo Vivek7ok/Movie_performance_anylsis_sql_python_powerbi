@@ -12,8 +12,6 @@
 
 -- 7️⃣ How does movie popularity change based on original language, and which languages show the highest average performance?
 
-
-
 -- 9️⃣ Do movies with higher vote counts generally have higher vote averages, or is there any exception pattern?
 
 -- 10🔟 Which movies have high budgets but underperformed in revenue, and what common characteristics do they share?
