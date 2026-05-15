@@ -1,162 +1,250 @@
-use Movies_data;
+USE Movies_data;
 
-SELECT DISTINCT
+-- =========================================================
+-- 1️⃣ Highest ROI Movies + ROI by Genre
+-- Business Question:
+-- Which movies achieved the highest Return on Investment (ROI)
+-- compared to their budget, and which genres are most profitable?
+-- =========================================================
+
+-- Top 5 movies with highest ROI
+SELECT 
     genres,
     original_title,
-    ROUND((revenue / budget) * 100, 2) AS ROI
-FROM
-    Movies_data
-WHERE
-    budget > 0
-ORDER BY ROUND((revenue / budget) * 100, 2) DESC
+    budget,
+    revenue,
+    ROUND((revenue / budget) * 100, 2) AS ROI_Percentage
+FROM Movies_data
+WHERE budget > 0
+ORDER BY ROI_Percentage DESC
 LIMIT 5;
 
-select director ,original_title ,rev
-from 
-(SELECT 
-    director, 
-    original_title,
-    row_number() over(partition by director order by avg(revenue) desc) as rn,
-    avg(revenue) rev from
-    Movies_data group by  director, original_title) as t
-where rn > 5
-limit 5;
 
+-- Average ROI by Genre
 SELECT 
-    genres, ROUND(AVG((revenue / budget) * 100), 2) AS ROI
-FROM
-    Movies_data
-WHERE
-    budget > 0
+    genres,
+    ROUND(AVG((revenue / budget) * 100), 2) AS Avg_ROI
+FROM Movies_data
+WHERE budget > 0
 GROUP BY genres
-ORDER BY ROI DESC
+ORDER BY Avg_ROI DESC
 LIMIT 5;
+
+
+
+-- =========================================================
+-- 2️⃣ Best Performing Directors
+-- Business Question:
+-- Which directors consistently create successful movies based on
+-- revenue, ratings, and popularity?
+-- =========================================================
 
 SELECT 
     director,
-    AVG(revenue) AS avg_revenue,
-    AVG(popularity) AS avg_popularity
+    COUNT(*) AS total_movies,
+    ROUND(AVG(revenue), 2) AS avg_revenue,
+    ROUND(AVG(vote_average), 2) AS avg_rating,
+    ROUND(AVG(popularity), 2) AS avg_popularity
 FROM Movies_data
+WHERE director IS NOT NULL
 GROUP BY director
-ORDER BY avg_revenue DESC;
+HAVING COUNT(*) >= 3
+ORDER BY avg_revenue DESC, avg_rating DESC, avg_popularity DESC;
 
-SELECT DISTINCT
-    YEAR(release_date) AS every_year,
-    COUNT(original_title) AS Trend,
-    ROUND(AVG(revenue), 1) avg_rev
-FROM
-    Movies_data
+
+
+-- =========================================================
+-- 3️⃣ Movie Release Trend Over Time
+-- Business Question:
+-- Which years had the highest movie releases, average revenue,
+-- and audience ratings?
+-- =========================================================
+
+SELECT 
+    YEAR(release_date) AS release_year,
+    COUNT(*) AS total_movies,
+    ROUND(AVG(revenue), 2) AS avg_revenue,
+    ROUND(AVG(vote_average), 2) AS avg_rating
+FROM Movies_data
 GROUP BY YEAR(release_date)
-ORDER BY avg_rev DESC;
+ORDER BY release_year;
+
+
+
+-- =========================================================
+-- 4️⃣ Runtime vs Revenue & Ratings
+-- Business Question:
+-- Does movie runtime affect ratings and revenue performance?
+-- =========================================================
 
 SELECT 
     CASE
-        WHEN runtime < 90 THEN 'short'
-        WHEN runtime BETWEEN 90 AND 120 THEN 'medium'
-        ELSE 'lagre'
-    END AS runtime_performance,
-    COUNT(*) AS number_of_movies,
-    ROUND(AVG(revenue), 1)
-FROM
-    Movies_data
-GROUP BY runtime_performance;
+        WHEN runtime < 90 THEN 'Short Movie'
+        WHEN runtime BETWEEN 90 AND 120 THEN 'Medium Movie'
+        ELSE 'Long Movie'
+    END AS runtime_category,
+
+    COUNT(*) AS total_movies,
+    ROUND(AVG(revenue), 2) AS avg_revenue,
+    ROUND(AVG(vote_average), 2) AS avg_rating
+
+FROM Movies_data
+WHERE runtime IS NOT NULL
+GROUP BY runtime_category;
+
+
+
+-- =========================================================
+-- 5️⃣ Most Successful Production Companies
+-- Business Question:
+-- Which production companies perform best based on revenue,
+-- ratings, and popularity?
+-- =========================================================
 
 SELECT 
     production_companies,
-    AVG(revenue),
-    AVG(vote_average),
-    AVG(popularity)
-FROM
-    Movies_data
-GROUP BY production_companies;
+    COUNT(*) AS total_movies,
+    ROUND(AVG(revenue), 2) AS avg_revenue,
+    ROUND(AVG(vote_average), 2) AS avg_rating,
+    ROUND(AVG(popularity), 2) AS avg_popularity
+FROM Movies_data
+WHERE production_companies IS NOT NULL
+GROUP BY production_companies
+ORDER BY avg_revenue DESC;
 
-WITH a AS (
-    SELECT 
-        genres, 
-        AVG(revenue) AS avg_rev
-    FROM Movies_data
-    GROUP BY genres
-),
-b AS (
+
+
+-- =========================================================
+-- 6️⃣ Genre Revenue Outlier Analysis
+-- Business Question:
+-- Which movies performed better or worse than the average
+-- revenue of their genre?
+-- =========================================================
+
+WITH genre_avg AS (
     SELECT 
         genres,
-        original_title,
-        revenue
+        AVG(revenue) AS avg_genre_revenue
     FROM Movies_data
+    GROUP BY genres
 )
 
 SELECT 
-    b.genres,
-    a.avg_rev,
-    b.original_title,
-    b.revenue,
+    m.genres,
+    m.original_title,
+    m.revenue,
+    ROUND(g.avg_genre_revenue, 2) AS avg_genre_revenue,
+
     CASE
-        WHEN b.revenue > a.avg_rev THEN 'good'
-        ELSE 'bad'
-    END AS compare
-FROM b
-JOIN a 
-ON b.genres = a.genres;
+        WHEN m.revenue > g.avg_genre_revenue THEN 'Above Average'
+        ELSE 'Below Average'
+    END AS performance
+
+FROM Movies_data m
+JOIN genre_avg g
+ON m.genres = g.genres;
+
+
+
+-- =========================================================
+-- 7️⃣ Language Performance Analysis
+-- Business Question:
+-- Which languages have the highest popularity, ratings,
+-- and revenue performance?
+-- =========================================================
 
 SELECT 
     original_language,
-    ROUND(AVG(revenue), 1) AS avg_rev,
-    ROUND(AVG(popularity), 1) AS avg_pop,
-    CASE
-        WHEN AVG(revenue) > 25356448 THEN 'high'
-        WHEN AVG(revenue) > 1000000 THEN 'medium'
-        ELSE 'low'
-    END AS avg_rev_compare,
-    CASE
-        WHEN AVG(popularity) > 20 THEN 'high'
-        WHEN AVG(popularity) > 10 THEN 'medium'
-        ELSE 'low'
-    END AS avg_pop_compare
-FROM
-    Movies_data
-GROUP BY original_language
-ORDER BY avg_rev DESC;
 
-SELECT 
-    vote_average,
-    vote_count,
+    COUNT(*) AS total_movies,
+
+    ROUND(AVG(revenue), 2) AS avg_revenue,
+    ROUND(AVG(popularity), 2) AS avg_popularity,
+    ROUND(AVG(vote_average), 2) AS avg_rating,
+
     CASE
-		WHEN vote_average >= 7 AND vote_count >= 500 THEN 'Hiden gem'
-        WHEN vote_average >= 7 AND vote_count >= 10000 THEN 'Expected'
-        WHEN vote_average >= 7 AND vote_count >= 500 THEN 'Hiden gem'
-        WHEN vote_average >= 4 AND vote_count >= 3000 THEN 'Good'
-        WHEN vote_average >= 3 AND vote_count >= 5 THEN 'Big shot'
-    END AS compare
-FROM
-    Movies_data;
+        WHEN AVG(revenue) > 50000000 THEN 'High Revenue'
+        WHEN AVG(revenue) > 10000000 THEN 'Medium Revenue'
+        ELSE 'Low Revenue'
+    END AS revenue_category
+
+FROM Movies_data
+GROUP BY original_language
+ORDER BY avg_revenue DESC;
+
+
+
+-- =========================================================
+-- 8️⃣ Hidden Gems vs Popular Movies
+-- Business Question:
+-- Which movies are highly rated but have low vote counts
+-- (hidden gems), and which movies are mainstream hits?
+-- =========================================================
 
 SELECT 
     original_title,
-    revenue,
-    budget,
+    vote_average,
     vote_count,
+    popularity,
+
+    CASE
+        WHEN vote_average >= 8 AND vote_count < 1000
+            THEN 'Hidden Gem'
+
+        WHEN vote_average >= 7 AND vote_count >= 10000
+            THEN 'Mainstream Hit'
+
+        WHEN vote_average >= 6
+            THEN 'Good Movie'
+
+        ELSE 'Average Movie'
+    END AS movie_category
+
+FROM Movies_data;
+
+
+
+-- =========================================================
+-- 9️⃣ Vote Count vs Vote Average Analysis
+-- Business Question:
+-- Do movies with higher vote counts usually have higher ratings?
+-- =========================================================
+
+SELECT 
+    CASE
+        WHEN vote_count < 1000 THEN 'Low Votes'
+        WHEN vote_count BETWEEN 1000 AND 10000 THEN 'Medium Votes'
+        ELSE 'High Votes'
+    END AS vote_group,
+
+    COUNT(*) AS total_movies,
+    ROUND(AVG(vote_average), 2) AS avg_rating
+
+FROM Movies_data
+GROUP BY vote_group;
+
+
+
+-- =========================================================
+-- 🔟 High Budget but Low Revenue Movies
+-- Business Question:
+-- Which movies had huge budgets but failed at the box office?
+-- =========================================================
+
+SELECT 
+    original_title,
+    genres,
+    budget,
+    revenue,
+    popularity,
     vote_average,
     runtime
-FROM
-    movies_data
-WHERE
-    budget < 1000000000
-        AND revenue < 10000000
-        AND budget != 0
-        AND revenue != 0;
 
+FROM Movies_data
 
+WHERE budget > 100000000
+AND revenue < budget
+AND budget > 0
+AND revenue > 0
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+ORDER BY budget DESC;
