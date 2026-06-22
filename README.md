@@ -1,74 +1,212 @@
-# 🎬 Movie Data Analysis Project
+# Movie Performance Analysis
 
-## 📊 Project Overview
+## Description
 
-This project analyzes a movie dataset to discover insights related to revenue performance, genres, ratings, production companies, and other key factors affecting movie success. The goal is to apply data analysis techniques to identify trends and support business decision-making in the film industry.
+This project combines SQL, Python, and Power BI to analyze movie industry data and identify key factors that influence movie success. The analysis focuses on revenue, budget, popularity, ratings, genres, production companies, and release trends.
 
-## 🎯 Objectives
- 
-* Analyze movie performance using financial and audience metrics
-* Identify high-performing genres and directors
-* Understand relationship between budget, revenue, ratings, and popularity
-* Generate actionable business insights from data
+The objective is to transform raw movie data into actionable business insights that can help studios, producers, and stakeholders make data-driven decisions.
 
-## 📂 Dataset Description
+---
 
-The dataset contains information about movies including:
+## Project Objectives
 
-* budget — Movie production budget
-* revenue — Total box office revenue
-* genres — Movie genre categories
-* runtime — Duration of movie
-* vote_average — Average user rating
-* vote_count — Number of votes
-* popularity — Popularity score
-* production_companies — Production companies involved
-* director — Movie director
-* release_date — Movie release date
-* original_title — Movie name
+* Analyze movie revenue and profitability
+* Identify top-performing genres
+* Evaluate the impact of budget on revenue
+* Discover trends in movie ratings and popularity
+* Analyze yearly movie performance
+* Create an interactive Power BI dashboard
 
-## 🛠️ Tools & Technologies
+---
 
-* Python (Pandas, NumPy)
-* SQL
-* Data Visualization (Matplotlib / Power BI)
-* Excel (optional)
+## Dataset Information
 
-## 🔎 Analysis Process
+Dataset: Movie Industry Dataset
 
-### 1️⃣ Data Cleaning
+Features Include:
 
-* Removed missing and invalid values
-* Filtered zero budget and zero revenue entries
-* Standardized column formats
+* Movie Title
+* Budget
+* Revenue
+* Profit
+* Popularity
+* Vote Average
+* Vote Count
+* Genre
+* Release Date
+* Production Company
+* Runtime
 
-### 2️⃣ Exploratory Data Analysis (EDA)
+---
 
-* Revenue analysis by genre
-* Budget vs revenue comparison
-* Runtime vs performance analysis
-* Director performance comparison
+## Project Structure
 
-### 3️⃣ Visualization
+```text
+Movie_performance_analysis_sql_python_powerbi/
+│
+├── Data/
+│   └── movies.csv
+│
+├── SQL/
+│   └── movie_analysis.sql
+│
+├── Python/
+│   └── movie_analysis.py
+│
+├── PowerBI/
+│   └── Movie Dashboard.pbix
+│
+├── Report/
+│   └── Project_Report.pdf
+│
+└── README.md
+```
 
-* Bar charts for genre revenue
-* Performance comparisons
-* Trend analysis visuals
+---
 
-## 📈 Key Insights
+## Tools & Technologies
 
-* Certain genres consistently generate higher average revenue.
-* High budget does not always guarantee high revenue.
-* Some directors show consistent performance across multiple metrics.
-* Audience ratings and popularity can influence financial success.
+### Data Analysis
 
-## 💡 Business Recommendations
+* Python
+* Pandas
+* NumPy
 
-* Invest more in high-performing genres.
-* Collaborate with consistently successful directors.
+### Data Visualization
+
+* Matplotlib
+* Seaborn
+* Power BI
+
+### Database
+
+* MySQL
+
+---
+
+## Data Cleaning
+
+The dataset was cleaned using Python before analysis.
+
+Cleaning steps included:
+
+* Handling missing values
+* Removing duplicates
+* Data type conversion
+* Feature engineering
+* Outlier identification
+* Revenue and profit calculations
+
+---
+
+## SQL Analysis
+
+Business questions answered using SQL:
+
+* Which movies generated the highest revenue?
+* Which genres perform best?
+* Which production companies create the most successful movies?
+* What is the relationship between budget and revenue?
+* Which years had the highest movie earnings?
+* Which movies delivered the highest profit?
+
+---
+
+## Python EDA
+
+Exploratory Data Analysis was performed using Python to identify:
+
+* Revenue distribution
+* Budget distribution
+* Popularity trends
+* Rating patterns
+* Genre performance
+* Profitability analysis
+* Correlation between key variables
+
+---
+
+## Power BI Dashboard
+
+Dashboard includes:
+
+* Revenue Overview
+* Budget vs Revenue Analysis
+* Top Movies
+* Genre Performance
+* Release Year Trends
+* Profitability Analysis
+* Interactive Filters and Slicers
+
+---
+
+## Key Insights
+
+* High-budget movies generally generate higher revenue but not always higher profit.
+* Certain genres consistently outperform others in revenue generation.
+* Popularity strongly influences box office success.
+* A small number of blockbuster movies contribute significantly to total revenue.
+* Movie performance varies across release years and market trends.
+
+---
+
+## Business Recommendations
+
+* Focus investment on consistently profitable genres.
 * Optimize budget allocation based on historical performance.
-* Improve marketing strategies for low-performing segments.
+* Use popularity metrics for marketing strategy planning.
+* Analyze successful production companies for best practices.
+* Improve forecasting using historical movie performance data.
 
-## 👨‍💻 Author
+---
 
-Vivek Mali
+## Results
+
+The project successfully identified major drivers of movie performance and profitability through SQL analysis, Python-based EDA, and Power BI dashboarding.
+
+The findings provide valuable insights for decision-making in movie production, investment, and marketing.
+
+---
+
+## Future Improvements
+
+* Build a Movie Revenue Prediction Model
+* Perform Sentiment Analysis on Reviews
+* Deploy Interactive Dashboard Online
+* Add Machine Learning Forecasting
+* Integrate Real-Time Movie Data APIs
+
+---
+
+## Dashboard Preview
+
+(Add dashboard screenshots here)
+
+```md
+![Dashboard](images/dashboard.png)
+```
+
+---
+
+## Author
+
+**Vivek Mali**
+
+Aspiring Data Analyst
+
+Skills:
+
+* SQL
+* Python
+* Power BI
+* Data Visualization
+* Exploratory Data Analysis
+
+GitHub Repository:
+https://github.com/Vivek7ok/Movie_performance_anylsis_sql_python_powerbi
+
+---
+
+## License
+
+This project is created for educational, portfolio, and learning purposes.
