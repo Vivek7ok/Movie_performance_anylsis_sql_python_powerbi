@@ -44,10 +44,6 @@ Features Include:
 ```text
 Movie_performance_analysis_sql_python_powerbi/
 │
-├── Movies Data.csv
-│
-├── MySql.sql
-│
 ├── Python/
 │   └── Data Clening.py
 │   └── EDA.py
@@ -56,6 +52,10 @@ Movie_performance_analysis_sql_python_powerbi/
 ├── Visulisation/
 │   └── Dashboard.pbix
 │   └── Image.png
+│
+├── Movies Data.csv
+│
+├── MySql.sql
 │
 ├── READNE.md
 │
