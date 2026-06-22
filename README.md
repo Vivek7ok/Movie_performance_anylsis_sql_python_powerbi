@@ -180,11 +180,7 @@ The findings provide valuable insights for decision-making in movie production, 
 
 ## Dashboard Preview
 
-(Add dashboard screenshots here)
-
-```md
 ![Dashboard Preview](Visualisation/Image.png)
-```
 
 ---
 
