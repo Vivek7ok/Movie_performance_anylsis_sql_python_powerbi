@@ -183,7 +183,7 @@ The findings provide valuable insights for decision-making in movie production, 
 (Add dashboard screenshots here)
 
 ```md
-![Dashboard](images/dashboard.png)
+![image alt](https://github.com/Vivek7ok/Movie_performance_anylsis_sql_python_powerbi/blob/b6eafd8dd3aab6f4f4d5ed21468e50177a7836ea/Visualisation/Image.png)
 ```
 
 ---
@@ -201,12 +201,3 @@ Skills:
 * Power BI
 * Data Visualization
 * Exploratory Data Analysis
-
-GitHub Repository:
-https://github.com/Vivek7ok/Movie_performance_anylsis_sql_python_powerbi
-
----
-
-## License
-
-This project is created for educational, portfolio, and learning purposes.
