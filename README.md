@@ -44,22 +44,22 @@ Features Include:
 ```text
 Movie_performance_analysis_sql_python_powerbi/
 │
-├── Data/
-│   └── movies.csv
+├── Movies Data.csv
 │
-├── SQL/
-│   └── movie_analysis.sql
+├── MySql.sql
 │
 ├── Python/
-│   └── movie_analysis.py
+│   └── Data Clening.py
+│   └── EDA.py
+│   └── Insert.py
 │
-├── PowerBI/
-│   └── Movie Dashboard.pbix
+├── Visulisation/
+│   └── Dashboard.pbix
+│   └── Image.png
 │
-├── Report/
-│   └── Project_Report.pdf
+├── READNE.md
 │
-└── README.md
+└── Report.docx
 ```
 
 ---
