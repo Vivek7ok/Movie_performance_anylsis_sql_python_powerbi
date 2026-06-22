@@ -183,7 +183,7 @@ The findings provide valuable insights for decision-making in movie production, 
 (Add dashboard screenshots here)
 
 ```md
-![Dashboard](images.png)
+![Dashboard](Visualisation/Image.png)
 ```
 
 ---
